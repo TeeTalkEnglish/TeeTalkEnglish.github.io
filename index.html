@@ -1,37 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>TeeTalkEnglish - Games</title>
-    <style>
-        body { font-family: Arial; text-align: center; background: #f0f8ff; }
-        h1 { color: #e05c2b; }
-        .game-grid { display: flex; flex-wrap: wrap; justify-content: center; }
-        .game-card { background: white; border-radius: 10px; 
-                     padding: 20px; margin: 10px; width: 200px;
-                     box-shadow: 2px 2px 10px rgba(0,0,0,0.1); }
-        a { text-decoration: none; color: #e05c2b; font-weight: bold; }
-    </style>
+  <title>TeeTalkEnglish - Games</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+    }
+
+    /* ── Header ── */
+    header {
+      background: #e05c2b;
+      color: white;
+      padding: 30px 20px;
+    }
+
+    header h1  { font-size: 32px; margin-bottom: 6px; }
+    header p   { font-size: 16px; opacity: 0.9; }
+
+    /* ── Category tabs ── */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 2px solid #e05c2b;
+      background: white;
+      color: #e05c2b;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .tab.active, .tab:hover {
+      background: #e05c2b;
+      color: white;
+    }
+
+    /* ── Game grid ── */
+    .game-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px 30px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* ── Game card ── */
+    .game-card {
+      background: white;
+      border-radius: 14px;
+      padding: 24px 20px;
+      width: 220px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      position: relative;
+    }
+
+    .game-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+    }
+
+    .game-card .emoji  { font-size: 48px; margin-bottom: 10px; }
+    .game-card h3      { color: #1a1a1a; font-size: 16px; margin-bottom: 6px; }
+    .game-card p       { color: #666; font-size: 13px; margin-bottom: 14px; line-height: 1.5; }
+
+    .badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .badge-new    { background: #e8f5e9; color: #2e7d32; }
+    .badge-coming { background: #fff3e0; color: #e65100; }
+
+    .btn-play {
+      display: inline-block;
+      background: #e05c2b;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    .btn-play:hover   { background: #c0451a; }
+    .btn-coming       {
+      display: inline-block;
+      background: #ddd;
+      color: #999;
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: not-allowed;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #1a1a1a;
+      color: #888;
+      padding: 20px;
+      font-size: 13px;
+    }
+  </style>
 </head>
 <body>
-    <h1>🎮 TeeTalkEnglish Games</h1>
-    <p>Click a game to play!</p>
-    <div class="game-grid">
-        <div class="game-card">
-            <h3>✈️ Airport Game</h3>
-            <a href="https://teetalkenglish.github.io/AIRPORT-GAME">Play Now</a>
-        </div>
-        <div class="game-card">
-            <h3>💅 Nail Salon Game</h3>
-            <a href="https://teetalkenglish.github.io/nail-salon-game">Play Now</a>
-        </div>
-        <div class="game-card">
-            <h3>🛂 Security Check</h3>
-            <a href="https://teetalkenglish.github.io/Security-Check-AtTheAirPort-1P">Play Now</a>
-        </div>
-        <div class="game-card">
-            <h3>💅 Nail Salon Duolingo</h3>
-            <a href="https://teetalkenglish.github.io/nail-salon-duolingo-p1-4">Play Now</a>
-        </div>
-    </div>
+
+<!-- HEADER -->
+<header>
+  <h1>🎮 TeeTalkEnglish</h1>
+  <p>Interactive English Conversation Games</p>
+</header>
+
+<!-- CATEGORY TABS -->
+<div class="tabs">
+  <div class="tab active">All Games</div>
+  <div class="tab">✈️ Travel</div>
+  <div class="tab">🍽️ Food</div>
+  <div class="tab">🛍️ Shopping</div>
+</div>
+
+<!-- GAME GRID -->
+<div class="game-grid">
+
+  <!-- AIRPORT GAME ✅ LIVE -->
+  <div class="game-card">
+    <div class="badge badge-new">✅ NEW</div>
+    <div class="emoji">✈️</div>
+    <h3>Airport: Find Your Gate</h3>
+    <p>Navigate the airport, ask for directions, find Gate B1!</p>
+    <a class="btn-play"
+       href="https://teetalkenglish.github.io/AIRPORT-GAME">
+      ▶ Play Now
+    </a>
+  </div>
+
+  <!-- RESTAURANT (coming soon) -->
+  <div class="game-card">
+    <div class="badge badge-coming">🔜 Soon</div>
+    <div class="emoji">🍽️</div>
+    <h3>Restaurant: Order Food</h3>
+    <p>Practice ordering food and drinks at a restaurant!</p>
+    <span class="btn-coming">Coming Soon</span>
+  </div>
+
+  <!-- HOTEL (coming soon) -->
+  <div class="game-card">
+    <div class="badge badge-coming">🔜 Soon</div>
+    <div class="emoji">🏨</div>
+    <h3>Hotel: Check In</h3>
+    <p>Check into a hotel and ask for your room key!</p>
+    <span class="btn-coming">Coming Soon</span>
+  </div>
+
+  <!-- SHOPPING (coming soon) -->
+  <div class="game-card">
+    <div class="badge badge-coming">🔜 Soon</div>
+    <div class="emoji">🛍️</div>
+    <h3>Shopping: Buy Clothes</h3>
+    <p>Ask for sizes, prices and try on clothes!</p>
+    <span class="btn-coming">Coming Soon</span>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>TeeTalkEnglish © 2025 · Built with GitHub Pages</p>
+</footer>
+
 </body>
 </html>
