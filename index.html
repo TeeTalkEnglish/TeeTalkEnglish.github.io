@@ -1,236 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airport Game - TeeTalk English</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <title>TeeTalkEnglish - Games</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+    }
 
-        .menu-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
+    /* ── Header ── */
+    header {
+      background: #e05c2b;
+      color: white;
+      padding: 30px 20px;
+    }
 
-        .menu-container h1 {
-            font-size: 36px;
-            color: #2c5364;
-            margin-bottom: 10px;
-        }
+    header h1  { font-size: 32px; margin-bottom: 6px; }
+    header p   { font-size: 16px; opacity: 0.9; }
 
-        .menu-container .subtitle {
-            color: #888;
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
+    /* ── Category tabs ── */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
 
-        .scenario-list {
-            display: grid;
-            gap: 15px;
-        }
+    .tab {
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 2px solid #e05c2b;
+      background: white;
+      color: #e05c2b;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-        .scenario-card {
-            background: #f5f5f5;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            padding: 25px;
-            text-decoration: none;
-            color: #333;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
+    .tab.active, .tab:hover {
+      background: #e05c2b;
+      color: white;
+    }
 
-        .scenario-card:hover {
-            background: #e3f2fd;
-            border-color: #185a9d;
-            transform: translateX(10px);
-        }
+    /* ── Game grid ── */
+    .game-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px 30px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
 
-        .scenario-card .icon {
-            font-size: 40px;
-            margin-right: 20px;
-        }
+    /* ── Game card ── */
+    .game-card {
+      background: white;
+      border-radius: 14px;
+      padding: 24px 20px;
+      width: 220px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      position: relative;
+    }
 
-        .scenario-card .info h3 {
-            font-size: 20px;
-            color: #2c5364;
-            margin-bottom: 5px;
-            text-align: left;
-        }
+    .game-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+    }
 
-        .scenario-card .info p {
-            font-size: 14px;
-            color: #888;
-            text-align: left;
-        }
+    .game-card .emoji  { font-size: 48px; margin-bottom: 10px; }
+    .game-card h3      { color: #1a1a1a; font-size: 16px; margin-bottom: 6px; }
+    .game-card p       { color: #666; font-size: 13px; margin-bottom: 14px; line-height: 1.5; }
 
-        .scenario-card .arrow {
-            margin-left: auto;
-            font-size: 24px;
-            color: #185a9d;
-        }
+    .badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: bold;
+    }
 
-        .scenario-card.locked {
-            opacity: 0.5;
-            pointer-events: none;
-        }
+    .badge-new    { background: #e8f5e9; color: #2e7d32; }
+    .badge-coming { background: #fff3e0; color: #e65100; }
 
-        .scenario-card.locked .arrow {
-            display: none;
-        }
+    .btn-play {
+      display: inline-block;
+      background: #e05c2b;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
 
-        .lock-icon {
-            margin-left: auto;
-            font-size: 24px;
-        }
+    .btn-play:hover   { background: #c0451a; }
+    .btn-coming       {
+      display: inline-block;
+      background: #ddd;
+      color: #999;
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: not-allowed;
+    }
 
-        .section-label {
-            text-align: left;
-            font-size: 13px;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            padding-left: 10px;
-            border-left: 3px solid #185a9d;
-        }
-
-        .section-label:first-of-type {
-            margin-top: 0;
-        }
-
-        .step-number {
-            background: #185a9d;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            font-weight: bold;
-            position: absolute;
-            top: -8px;
-            left: -8px;
-        }
-
-        .scenario-card {
-            position: relative;
-        }
-
-        .footer {
-            margin-top: 30px;
-            color: #aaa;
-            font-size: 14px;
-        }
-    </style>
+    /* ── Footer ── */
+    footer {
+      background: #1a1a1a;
+      color: #888;
+      padding: 20px;
+      font-size: 13px;
+    }
+  </style>
 </head>
 <body>
-    <div class="menu-container">
-        <h1>✈️ Airport Game</h1>
-        <p class="subtitle">Practice English for your trip to Australia!</p>
 
-        <div class="scenario-list">
+<!-- HEADER -->
+<header>
+  <h1>🎮 TeeTalkEnglish</h1>
+  <p>Interactive English Conversation Games</p>
+</header>
 
-            <!-- BEFORE THE FLIGHT -->
-            <div class="section-label">📋 Before the Flight</div>
+<!-- CATEGORY TABS -->
+<div class="tabs">
+  <div class="tab active">All Games</div>
+  <div class="tab">✈️ Travel</div>
+  <div class="tab">🍽️ Food</div>
+  <div class="tab">🛍️ Shopping</div>
+</div>
 
-            <a href="https://teetalkenglish.github.io/Security-Check-AtTheAirPort-1P/" class="scenario-card" target="_blank">
-                <div class="step-number">1</div>
-                <div class="icon">🔍</div>
-                <div class="info">
-                    <h3>Security Check</h3>
-                    <p>Go through the airport security screening</p>
-                </div>
-                <div class="arrow">➡️</div>
-            </a>
+<!-- GAME GRID -->
+<div class="game-grid">
 
-            <!-- FINDING YOUR GATE -->
-            <div class="section-label">🏢 Finding Your Gate</div>
+  <!-- AIRPORT GAME ✅ LIVE -->
+  <div class="game-card">
+    <div class="badge badge-new">✅ NEW</div>
+    <div class="emoji">✈️</div>
+    <h3>Airport: Find Your Gate</h3>
+    <p>Navigate the airport, ask for directions, find Gate B1!</p>
+    <a class="btn-play"
+   href="https://teetalkenglish.github.io/AIRPORT-GAME-FindingTheGate">
+  ▶ Play Now
+</a>
+  </div>
 
-            <a href="./scenario1/index.html" class="scenario-card">
-                <div class="step-number">2</div>
-                <div class="icon">🖥️</div>
-                <div class="info">
-                    <h3>Finding the Gate & Time</h3>
-                    <p>Read the departure board to find your gate and departure time</p>
-                </div>
-                <div class="arrow">➡️</div>
-            </a>
+  <!-- RESTAURANT (coming soon) -->
+  <div class="game-card">
+    <div class="badge badge-coming">🔜 Soon</div>
+    <div class="emoji">🍽️</div>
+    <h3>Restaurant: Order Food</h3>
+    <p>Practice ordering food and drinks at a restaurant!</p>
+    <span class="btn-coming">Coming Soon</span>
+  </div>
 
-            <a href="./scenario2/index.html" class="scenario-card">
-                <div class="step-number">3</div>
-                <div class="icon">🗺️</div>
-                <div class="info">
-                    <h3>Asking for Directions</h3>
-                    <p>Ask airport staff and passengers for directions to your gate</p>
-                </div>
-                <div class="arrow">➡️</div>
-            </a>
+  <!-- HOTEL (coming soon) -->
+  <div class="game-card">
+    <div class="badge badge-coming">🔜 Soon</div>
+    <div class="emoji">🏨</div>
+    <h3>Hotel: Check In</h3>
+    <p>Check into a hotel and ask for your room key!</p>
+    <span class="btn-coming">Coming Soon</span>
+  </div>
 
-            <!-- BOARDING -->
-            <div class="section-label">✈️ Boarding & Flying</div>
+  <!-- SHOPPING (coming soon) -->
+  <div class="game-card">
+    <div class="badge badge-coming">🔜 Soon</div>
+    <div class="emoji">🛍️</div>
+    <h3>Shopping: Buy Clothes</h3>
+    <p>Ask for sizes, prices and try on clothes!</p>
+    <span class="btn-coming">Coming Soon</span>
+  </div>
 
-            <a href="#" class="scenario-card locked">
-                <div class="step-number">4</div>
-                <div class="icon">🎫</div>
-                <div class="info">
-                    <h3>Boarding the Plane</h3>
-                    <p>Board the plane and find your seat</p>
-                </div>
-                <div class="lock-icon">🔒</div>
-            </a>
+</div>
 
-            <a href="#" class="scenario-card locked">
-                <div class="step-number">5</div>
-                <div class="icon">💺</div>
-                <div class="info">
-                    <h3>On the Plane</h3>
-                    <p>Talk to flight attendants and other passengers</p>
-                </div>
-                <div class="lock-icon">🔒</div>
-            </a>
+<!-- FOOTER -->
+<footer>
+  <p>TeeTalkEnglish © 2025 · Built with GitHub Pages</p>
+</footer>
 
-            <!-- ARRIVING -->
-            <div class="section-label">🇦🇺 Arriving in Australia</div>
-
-            <a href="#" class="scenario-card locked">
-                <div class="step-number">6</div>
-                <div class="icon">🛬</div>
-                <div class="info">
-                    <h3>Arriving in Australia</h3>
-                    <p>Go through customs and collect your luggage</p>
-                </div>
-                <div class="lock-icon">🔒</div>
-            </a>
-
-        </div>
-
-        <div class="footer">
-            <p>Made with ❤️ by TeeTalk English</p>
-        </div>
-    </div>
 </body>
 </html>
